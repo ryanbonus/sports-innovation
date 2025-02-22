@@ -39,6 +39,41 @@ const menuItems: MenuItem[] = [
     image: 'https://picsum.photos/seed/popcorn/200/200',
     description: 'Fresh buttered popcorn',
   },
+  {
+    id: 4,
+    name: 'Pizza Slice',
+    price: 7.99,
+    image: 'https://picsum.photos/seed/pizza/200/200',
+    description: 'Hot and cheesy pizza slice with your choice of toppings',
+  },
+  {
+    id: 5,
+    name: 'Hamburger',
+    price: 8.99,
+    image: 'https://picsum.photos/seed/burger/200/200',
+    description: 'Juicy quarter-pound burger with lettuce, tomato, and cheese',
+  },
+  {
+    id: 6,
+    name: 'Soda',
+    price: 3.99,
+    image: 'https://picsum.photos/seed/soda/200/200',
+    description: 'Ice-cold fountain drink, free refills',
+  },
+  {
+    id: 7,
+    name: 'Peanuts',
+    price: 4.50,
+    image: 'https://picsum.photos/seed/peanuts/200/200',
+    description: 'Classic ballpark roasted peanuts in the shell',
+  },
+  {
+    id: 8,
+    name: 'Nachos',
+    price: 6.99,
+    image: 'https://picsum.photos/seed/nachos/200/200',
+    description: 'Crispy tortilla chips with warm cheese sauce and jalapeños',
+  },
 ];
 
 export default function Page() {
@@ -125,7 +160,7 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffc629',
     paddingTop: Platform.OS === 'web' ? 20 : 50,
   },
   content: {
@@ -201,6 +236,8 @@ const styles = StyleSheet.create({
     borderColor: '#eee',
     marginLeft: Platform.OS === 'web' ? 20 : 0,
     marginTop: Platform.OS === 'web' ? 0 : 20,
+    backgroundColor: '#fff',
+    borderRadius: 10,
   },
   cartHeader: {
     fontSize: 20,
