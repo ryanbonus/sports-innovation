@@ -13,7 +13,7 @@ interface MenuItem {
   id: number;
   name: string;
   price: number;
-  image: string;
+  image: any;
   description: string;
 }
 
@@ -22,56 +22,56 @@ const menuItems: MenuItem[] = [
     id: 1,
     name: 'Hot Dog',
     price: 5.99,
-    image: 'https://picsum.photos/seed/hotdog/200/200',
+    image: require('../assets/images/hotdog.jpg'),
     description: 'Classic ballpark hot dog with your choice of toppings',
   },
   {
     id: 2, 
     name: 'Cotton Candy',
     price: 4.99,
-    image: 'https://picsum.photos/seed/cottoncandy/200/200',
+    image: require('../assets/images/cotton-candy.jpg'),
     description: 'Sweet and fluffy cotton candy',
   },
   {
     id: 3,
     name: 'Popcorn',
     price: 6.99,
-    image: 'https://picsum.photos/seed/popcorn/200/200',
+    image: require('../assets/images/popcorn.jpg'),
     description: 'Fresh buttered popcorn',
   },
   {
     id: 4,
     name: 'Pizza Slice',
     price: 7.99,
-    image: 'https://picsum.photos/seed/pizza/200/200',
+    image: require('../assets/images/pizza.jpg'),
     description: 'Hot and cheesy pizza slice with your choice of toppings',
   },
   {
     id: 5,
     name: 'Hamburger',
     price: 8.99,
-    image: 'https://picsum.photos/seed/burger/200/200',
+    image: require('../assets/images/burger.jpg'),
     description: 'Juicy quarter-pound burger with lettuce, tomato, and cheese',
   },
   {
     id: 6,
     name: 'Soda',
     price: 3.99,
-    image: 'https://picsum.photos/seed/soda/200/200',
+    image: require('../assets/images/soda.jpg'),
     description: 'Ice-cold fountain drink, free refills',
   },
   {
     id: 7,
     name: 'Peanuts',
     price: 4.50,
-    image: 'https://picsum.photos/seed/peanuts/200/200',
+    image: require('../assets/images/peanuts.jpg'),
     description: 'Classic ballpark roasted peanuts in the shell',
   },
   {
     id: 8,
     name: 'Nachos',
     price: 6.99,
-    image: 'https://picsum.photos/seed/nachos/200/200',
+    image: require('../assets/images/nachos.jpg'),
     description: 'Crispy tortilla chips with warm cheese sauce and jalapeños',
   },
 ];
@@ -101,7 +101,11 @@ export default function Page() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Stadium Concessions</Text>
+      <View style={styles.headerContainer}>
+        <View style={styles.headerContent}>
+          <Text style={styles.header}>STADIUM CONCESSIONS</Text>
+        </View>
+      </View>
       
       <View style={styles.content}>
         <ScrollView style={styles.menuList}>
@@ -109,7 +113,7 @@ export default function Page() {
             <View key={item.id} style={styles.menuItem}>
               <Image
                 style={styles.itemImage}
-                source={{ uri: item.image }}
+                source={item.image}
               />
               <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.name}</Text>
@@ -165,17 +169,35 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    flexDirection: Platform.OS === 'web' ? 'row' : 'column',
+    flexDirection: Platform.OS === 'web' ? 'row-reverse' : 'column',
     padding: 20,
+    paddingTop: 0,
+    backgroundColor: '#B2B4B2',
+    margin: 20,
+    borderRadius: 15,
+    ...Platform.select({
+      web: {
+        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+      },
+      default: {
+        elevation: 3,
+      },
+    }),
   },
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
-    padding: 20,
+    fontWeight: '900',
     textAlign: 'center',
+    padding: 10,
+    color: '#2D2926',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   menuList: {
     flex: 2,
+    backgroundColor: 'transparent',
+    padding: 15,
+    marginLeft: Platform.OS === 'web' ? 20 : 0,
   },
   menuItem: {
     flexDirection: 'row',
@@ -231,13 +253,10 @@ const styles = StyleSheet.create({
   cart: {
     flex: 1,
     padding: 15,
-    borderLeftWidth: Platform.OS === 'web' ? 1 : 0,
-    borderTopWidth: Platform.OS === 'web' ? 0 : 1,
-    borderColor: '#eee',
-    marginLeft: Platform.OS === 'web' ? 20 : 0,
+    marginLeft: 0,
     marginTop: Platform.OS === 'web' ? 0 : 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
+    backgroundColor: 'transparent',
+    borderRadius: 15,
   },
   cartHeader: {
     fontSize: 20,
@@ -246,6 +265,14 @@ const styles = StyleSheet.create({
   },
   cartItems: {
     maxHeight: 200,
+    ...Platform.select({
+      web: {
+        direction: 'rtl',
+        '& > *': {
+          direction: 'ltr',
+        },
+      },
+    }),
   },
   cartItem: {
     flexDirection: 'row',
@@ -254,6 +281,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
+    backgroundColor: '#fff',
+    marginBottom: 5,
+    borderRadius: 5,
   },
   cartItemName: {
     flex: 1,
@@ -286,5 +316,30 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 120,
     alignItems: 'center',
+  },
+  headerContainer: {
+    padding: 20,
+    paddingHorizontal: 10,
+    paddingTop: 30,
+    paddingBottom: 30,
+    backgroundColor: '#ffc629',
+    alignItems: 'center',
+  },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '60%',
+    backgroundColor: '#F1E6B2',
+    borderRadius: 10,
+    padding: 5,
+    ...Platform.select({
+      web: {
+        boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+      },
+      default: {
+        elevation: 2,
+      },
+    }),
   },
 }); 
