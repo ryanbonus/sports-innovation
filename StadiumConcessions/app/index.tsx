@@ -206,7 +206,7 @@ export default function Page() {
             showsVerticalScrollIndicator={false}
           >
             <Text style={styles.menuListTitle}>Menu</Text>
-            {menuItems.map((item) => (
+            {menuItems.map((item, index) => (
               <View key={item.id} style={styles.menuItem}>
                 <Image
                   style={styles.itemImage}
@@ -245,7 +245,7 @@ export default function Page() {
                     onPress={() => removeFromCart(index)}
                     style={styles.removeButton}
                   >
-                    <Text style={styles.removeButtonText}>Remove</Text>
+                    <Text style={styles.removeButtonText}>×</Text>
                   </TouchableOpacity>
                 </View>
               ))}
@@ -266,7 +266,7 @@ export default function Page() {
                 style={styles.checkoutButton}
                 onPress={handleCheckout}
               >
-                <Text style={styles.buttonText}>Checkout</Text>
+                <Text style={styles.buttonText}>Check Out</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -287,13 +287,12 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: Platform.OS === 'web' ? 'row-reverse' : 'column',
-    padding: 20,
-    paddingTop: 0,
+    padding: Platform.OS === 'web' ? 20 : 10,
     marginTop: 0,
     backgroundColor: '#B2B4B2',
-    margin: 20,
-    marginHorizontal: '10%',
-    maxWidth: 1200,
+    margin: Platform.OS === 'web' ? 20 : 10,
+    marginHorizontal: Platform.OS === 'web' ? '10%' : '5%',
+    maxWidth: Platform.OS === 'web' ? 1200 : '100%',
     alignSelf: 'center',
     borderRadius: 15,
     borderWidth: 2,
@@ -326,7 +325,7 @@ const styles = StyleSheet.create({
     }),
   },
   menuContainer: {
-    flex: 2,
+    flex: Platform.OS === 'web' ? 2 : 1,
     position: 'relative',
   },
   menuList: {
@@ -361,13 +360,11 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     flexDirection: 'row',
-    padding: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    marginBottom: 10,
+    padding: Platform.OS === 'web' ? 8 : 6,
+    marginBottom: Platform.OS === 'web' ? 10 : 8,
+    width: '100%',
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
-    width: '95%',
     alignSelf: 'center',
     borderWidth: 2,
     borderColor: '#2D2926',
@@ -388,8 +385,8 @@ const styles = StyleSheet.create({
     }),
   },
   itemImage: {
-    width: 70,
-    height: 70,
+    width: Platform.OS === 'web' ? 70 : 60,
+    height: Platform.OS === 'web' ? 70 : 60,
     borderRadius: 8,
   },
   itemInfo: {
@@ -420,15 +417,16 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+    textAlign: 'center',
+    paddingVertical: 2,
   },
   cart: {
-    flex: 1,
-    padding: 15,
+    flex: Platform.OS === 'web' ? 1 : 0.8,
+    padding: Platform.OS === 'web' ? 15 : 10,
     marginLeft: 0,
-    marginTop: Platform.OS === 'web' ? 0 : 20,
-    backgroundColor: 'transparent',
-    borderRadius: 10,
+    marginTop: Platform.OS === 'web' ? 0 : 10,
     position: 'relative',
+    height: Platform.OS === 'web' ? 'auto' : '80%',
   },
   orderHeaderContainer: {
     backgroundColor: '#FFFFFF',
@@ -436,25 +434,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#2D2926',
     padding: 15,
-    marginBottom: 80,
+    marginBottom: Platform.OS === 'web' ? 80 : 140,
     marginHorizontal: -15,
-    flex: 1,
-    maxHeight: '75%',
-    ...Platform.select({
-      web: {
-        boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1)',
-      },
-      default: {
-        elevation: 8,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 6,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-      },
-    }),
+    flex: Platform.OS === 'web' ? 1 : 0.7,
+    maxHeight: Platform.OS === 'web' ? '75%' : '45%',
+    height: 'auto',
+    overflow: 'auto',
   },
   menuListTitle: {
     fontSize: 24,
@@ -485,12 +470,12 @@ const styles = StyleSheet.create({
     }),
   },
   cartTitleContainer: {
+    padding: Platform.OS === 'web' ? 10 : 8,
+    marginBottom: Platform.OS === 'web' ? 15 : 10,
     backgroundColor: 'rgba(255, 198, 41, 0.8)',
-    padding: 10,
     borderRadius: 8,
     borderWidth: 2,
     borderColor: '#2D2926',
-    marginBottom: 15,
     ...Platform.select({
       web: {
         boxShadow: '0 4px 8px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1)',
@@ -514,128 +499,93 @@ const styles = StyleSheet.create({
     color: '#2D2926',
   },
   totalText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
-    marginBottom: 10,
+    marginBottom: 8,
     backgroundColor: '#FFFFFF',
-    padding: 10,
-    borderRadius: 8,
-    borderWidth: 2,
+    padding: 8,
+    borderRadius: 6,
+    borderWidth: 1,
     borderColor: '#2D2926',
-    ...Platform.select({
-      web: {
-        boxShadow: '0 4px 8px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1)',
-      },
-      default: {
-        elevation: 8,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 4.65,
-      },
-    }),
   },
   cartItems: {
+    flex: 1,
     width: '100%',
     marginTop: 10,
-    marginBottom: 0,
-    maxHeight: '90%',
+    marginBottom: Platform.OS === 'web' ? 0 : 20,
+    maxHeight: Platform.OS === 'web' ? '90%' : '100%',
+    overflow: 'scroll',
   },
   cartItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 12,
+    padding: 6,
     borderWidth: 1,
     borderColor: '#ddd',
     backgroundColor: '#f8f9fa',
-    marginBottom: 8,
-    borderRadius: 8,
-    ...Platform.select({
-      web: {
-        boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-      },
-      default: {
-        elevation: 2,
-      },
-    }),
+    marginBottom: 4,
+    borderRadius: 4,
   },
   cartItemName: {
     flex: 1,
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: '600',
     color: '#2D2926',
   },
   cartItemPrice: {
-    marginHorizontal: 12,
-    fontSize: 15,
+    marginHorizontal: 6,
+    fontSize: 12,
     fontWeight: '700',
     color: '#2ecc71',
   },
   removeButton: {
     backgroundColor: '#e74c3c',
-    padding: 8,
-    borderRadius: 6,
-    minWidth: 70,
+    padding: 4,
+    borderRadius: 50,
+    width: 20,
+    height: 20,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   removeButtonText: {
     color: 'white',
-    fontSize: 13,
-    fontWeight: '600',
+    fontSize: 12,
+    fontWeight: 'bold',
+    lineHeight: 12,
   },
   checkoutRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
-    marginTop: 10,
+    marginTop: 6,
+    marginBottom: 6,
+    flexWrap: 'wrap',
+    gap: 8,
   },
   seatInput: {
     backgroundColor: '#FFFFFF',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#2D2926',
-    borderRadius: 5,
+    borderRadius: 4,
     padding: 8,
     width: '45%',
-    marginRight: 10,
-    fontSize: 16,
-    ...Platform.select({
-      web: {
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-      },
-      default: {
-        elevation: 2,
-      },
-    }),
+    fontSize: 14,
+    textAlign: 'center',
+    height: 35,
   },
   checkoutButton: {
     backgroundColor: '#3498db',
-    padding: 10,
-    borderRadius: 5,
+    padding: 8,
+    borderRadius: 4,
     width: '45%',
     alignItems: 'center',
-    borderWidth: 2,
+    justifyContent: 'center',
+    borderWidth: 1,
     borderColor: '#2D2926',
-    ...Platform.select({
-      web: {
-        boxShadow: '0 4px 8px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1)',
-      },
-      default: {
-        elevation: 8,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 4.65,
-      },
-    }),
+    height: 35,
   },
   headerContainer: {
     paddingHorizontal: 0,
@@ -702,19 +652,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    padding: 15,
-    backgroundColor: 'rgba(255, 198, 41, 0.8)',
-    borderRadius: 10,
-    borderWidth: 2,
+    padding: 10,
+    paddingBottom: Platform.OS === 'web' ? 10 : 15,
+    backgroundColor: '#ffc629',
+    borderRadius: 8,
+    borderWidth: 1,
     borderColor: '#2D2926',
     alignItems: 'center',
-    ...Platform.select({
-      web: {
-        boxShadow: '0 -4px 6px rgba(0,0,0,0.1)',
-      },
-      default: {
-        elevation: 3,
-      },
-    }),
+    height: Platform.OS === 'web' ? 'auto' : 100,
   },
+
 }); 

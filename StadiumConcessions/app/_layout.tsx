@@ -106,11 +106,14 @@ const styles = StyleSheet.create({
     top: Platform.OS === 'web' ? 20 : 40,
     right: 20,
     zIndex: 1000,
+    maxWidth: '50%',
+    flexWrap: 'wrap',
   },
   gameDetails: {
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '500',
     textAlign: 'right',
+    flexWrap: 'wrap',
   },
 });
