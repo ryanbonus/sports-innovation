@@ -186,7 +186,7 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/images/sports_related.jpg')}
+        source={require('../assets/images/Basketball.jpg')}
         style={styles.headerBackground}
       />
       <View style={styles.headerContainer}>
