@@ -76,6 +76,34 @@ const menuItems: MenuItem[] = [
     image: require('../assets/images/nachos.jpg'),
     description: 'Crispy tortilla chips with warm cheese sauce and jalapeños',
   },
+  {
+    id: 10,
+    name: 'Scrappys Fried Chicken',
+    price: 6.99,
+    image: require('../assets/images/Chicken.jpg'),
+    description: 'Fried Chicken from the commons',
+  },
+  {
+    id: 11,
+    name: 'Starbucks Coffee',
+    price: 10.99,
+    image: require('../assets/images/Starbucks.jpg'),
+    description: 'Starbucks Coffee from the commons',
+  },
+  {
+    id: 12,
+    name: 'Panda Express',
+    price: 10.99,
+    image: require('../assets/images/Panda Express.jpg'),
+    description: 'Panda Express from the commons',
+  },
+  {
+    id: 13,
+    name: 'Chick-fil-A',
+    price: 15.99,
+    image: require('../assets/images/Chick-fil-A.jpg'),
+    description: 'Chick-fil-A from the commons',
+  },
 ];
 
 export default function Page() {
