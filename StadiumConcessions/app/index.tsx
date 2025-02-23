@@ -107,12 +107,20 @@ const menuItems: MenuItem[] = [
   },
 ];
 
+const backgroundImages = [
+  require('../assets/images/baseball.jpg'),
+  require('../assets/images/basketball.png'),
+  require('../assets/images/football.jpg'),
+  require('../assets/images/volleyball.jpg'),
+];
+
 export default function Page() {
   const [cart, setCart] = useState<MenuItem[]>([]);
   const [total, setTotal] = useState(0);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const fadeAnim = new Animated.Value(1);
   const [seatNumber, setSeatNumber] = useState('');
+  const [backgroundImage, setBackgroundImage] = useState(backgroundImages[0]);
 
   useEffect(() => {
     Animated.loop(
@@ -135,6 +143,41 @@ export default function Page() {
     }, 5000);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // Generate a random index based on current timestamp to ensure it changes
+    const timestamp = new Date().getTime();
+    const randomIndex = Math.floor((timestamp % 1000) / 250); // Will give 0-3
+    setBackgroundImage(backgroundImages[randomIndex]);
+
+    // Alternative method using true random
+    // const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+    // setBackgroundImage(backgroundImages[randomIndex]);
+
+    // Force a re-render on window focus for web platforms
+    if (Platform.OS === 'web') {
+      const handleFocus = () => {
+        const newRandomIndex = Math.floor(Math.random() * backgroundImages.length);
+        setBackgroundImage(backgroundImages[newRandomIndex]);
+      };
+
+      window.addEventListener('focus', handleFocus);
+      return () => window.removeEventListener('focus', handleFocus);
+    }
+  }, []);
+
+  // Add this new effect to handle refresh
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const handleRefresh = () => {
+        const newRandomIndex = Math.floor(Math.random() * backgroundImages.length);
+        setBackgroundImage(backgroundImages[newRandomIndex]);
+      };
+
+      window.addEventListener('load', handleRefresh);
+      return () => window.removeEventListener('load', handleRefresh);
+    }
   }, []);
 
   const showScrollHint = () => {
@@ -186,7 +229,7 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/images/Basketball.jpg')}
+        source={backgroundImage}
         style={styles.headerBackground}
       />
       <View style={styles.headerContainer}>
@@ -257,7 +300,7 @@ export default function Page() {
             <View style={styles.checkoutRow}>
               <TextInput
                 style={styles.seatInput}
-                placeholder="Enter Seat #"
+                placeholder="Seat #"
                 value={seatNumber}
                 onChangeText={setSeatNumber}
                 placeholderTextColor="#666"
