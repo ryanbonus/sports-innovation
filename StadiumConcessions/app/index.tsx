@@ -68,6 +68,7 @@ const menuItems: MenuItem[] = [
     image: require('../assets/images/peanuts.jpg'),
     description: 'Classic ballpark roasted peanuts in the shell',
   },
+  
   {
     id: 8,
     name: 'Nachos',
