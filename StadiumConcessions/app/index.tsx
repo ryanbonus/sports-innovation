@@ -8,6 +8,7 @@ import {
   Image,
   Platform,
   Animated,
+  TextInput,
 } from 'react-native';
 
 interface MenuItem {
@@ -111,6 +112,7 @@ export default function Page() {
   const [total, setTotal] = useState(0);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const fadeAnim = new Animated.Value(1);
+  const [seatNumber, setSeatNumber] = useState('');
 
   useEffect(() => {
     Animated.loop(
@@ -171,10 +173,14 @@ export default function Page() {
   };
 
   const handleCheckout = () => {
-    // TODO: Implement checkout logic
-    alert('Thank you for your order! Total: ' + total.toFixed(2));
+    if (!seatNumber.trim()) {
+      alert('Please enter your seat number');
+      return;
+    }
+    alert(`Thank you for your order!\nTotal: $${total.toFixed(2)}\nDelivery to seat: ${seatNumber}\nExpected delivery wait: 10 minutes`);
     setCart([]);
     setTotal(0);
+    setSeatNumber('');
   };
 
   return (
@@ -247,13 +253,22 @@ export default function Page() {
           </View>
           
           <View style={styles.totalContainer}>
-            <Text style={styles.totalText}>Total: {total.toFixed(2)}</Text>
-            <TouchableOpacity 
-              style={styles.checkoutButton}
-              onPress={handleCheckout}
-            >
-              <Text style={styles.buttonText}>Checkout</Text>
-            </TouchableOpacity>
+            <Text style={styles.totalText}>Total: ${total.toFixed(2)}</Text>
+            <View style={styles.checkoutRow}>
+              <TextInput
+                style={styles.seatInput}
+                placeholder="Enter Seat #"
+                value={seatNumber}
+                onChangeText={setSeatNumber}
+                placeholderTextColor="#666"
+              />
+              <TouchableOpacity 
+                style={styles.checkoutButton}
+                onPress={handleCheckout}
+              >
+                <Text style={styles.buttonText}>Checkout</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -573,13 +588,37 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
   },
+  checkoutRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 10,
+  },
+  seatInput: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 2,
+    borderColor: '#2D2926',
+    borderRadius: 5,
+    padding: 8,
+    width: '45%',
+    marginRight: 10,
+    fontSize: 16,
+    ...Platform.select({
+      web: {
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      },
+      default: {
+        elevation: 2,
+      },
+    }),
+  },
   checkoutButton: {
     backgroundColor: '#3498db',
     padding: 10,
     borderRadius: 5,
-    width: 120,
+    width: '45%',
     alignItems: 'center',
-    marginTop: 10,
     borderWidth: 2,
     borderColor: '#2D2926',
     ...Platform.select({
