@@ -171,6 +171,7 @@ export default function Page() {
             style={styles.menuList}
             showsVerticalScrollIndicator={false}
           >
+            <Text style={styles.menuListTitle}>Menu</Text>
             {menuItems.map((item) => (
               <View key={item.id} style={styles.menuItem}>
                 <Image
@@ -195,7 +196,9 @@ export default function Page() {
 
         <View style={styles.cart}>
           <View style={styles.orderHeaderContainer}>
-            <Text style={[styles.cartHeader, { textAlign: 'center' }]}>Your Order</Text>
+            <View style={styles.cartTitleContainer}>
+              <Text style={styles.cartHeader}>Your Order</Text>
+            </View>
             <ScrollView 
               style={styles.cartItems}
               showsVerticalScrollIndicator={false}
@@ -384,11 +387,88 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     position: 'relative',
   },
+  orderHeaderContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#2D2926',
+    padding: 15,
+    marginBottom: 80,
+    marginHorizontal: -15,
+    flex: 1,
+    maxHeight: '75%',
+    ...Platform.select({
+      web: {
+        boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1)',
+      },
+      default: {
+        elevation: 8,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 6,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+      },
+    }),
+  },
+  menuListTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#2D2926',
+    backgroundColor: '#FFFFFF',
+    padding: 10,
+    marginBottom: 15,
+    marginHorizontal: 10,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#2D2926',
+    ...Platform.select({
+      web: {
+        boxShadow: '0 4px 8px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1)',
+      },
+      default: {
+        elevation: 8,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4.65,
+      },
+    }),
+  },
+  cartTitleContainer: {
+    backgroundColor: 'rgba(255, 198, 41, 0.8)',
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#2D2926',
+    marginBottom: 15,
+    ...Platform.select({
+      web: {
+        boxShadow: '0 4px 8px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1)',
+      },
+      default: {
+        elevation: 8,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4.65,
+      },
+    }),
+  },
   cartHeader: {
     fontSize: 20,
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
-    marginBottom: 10,
+    textAlign: 'center',
+    color: '#2D2926',
   },
   totalText: {
     fontSize: 18,
@@ -472,6 +552,23 @@ const styles = StyleSheet.create({
     width: 120,
     alignItems: 'center',
     marginTop: 10,
+    borderWidth: 2,
+    borderColor: '#2D2926',
+    ...Platform.select({
+      web: {
+        boxShadow: '0 4px 8px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1)',
+      },
+      default: {
+        elevation: 8,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4.65,
+      },
+    }),
   },
   headerContainer: {
     paddingHorizontal: 0,
@@ -539,7 +636,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 15,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgba(255, 198, 41, 0.8)',
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#2D2926',
@@ -550,31 +647,6 @@ const styles = StyleSheet.create({
       },
       default: {
         elevation: 3,
-      },
-    }),
-  },
-  orderHeaderContainer: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#2D2926',
-    padding: 15,
-    marginBottom: 65,
-    flex: 1,
-    maxHeight: '82%',
-    ...Platform.select({
-      web: {
-        boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1)',
-      },
-      default: {
-        elevation: 8,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 6,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
       },
     }),
   },
